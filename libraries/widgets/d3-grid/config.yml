@@ -1,0 +1,2 @@
+d3-grid:
+  jshead: [js/d3.v3.js, js/d3-grid.js, js/d3-comparator.js]
