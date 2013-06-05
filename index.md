@@ -15,39 +15,27 @@ hitheme: twitter-bootstrap
 body {
   font-family: Helvetica, sans-serif;
 }
-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
 .filter-btn.active {
   font-weight: bold;
 }
-
-
-/* my own for this project */
-.container {
-  width: 800px;
+.main {
+  float: right;
 }
 </style>
-
-  <div class = "span3 sidebar">
-    Color
+  <div class = "span2 sidebar">
+  <h3>rCharts and d3-grid</h3>
+  A very fine example by Herr Stucki duplicated by me in R.  I plan to generalize the pattern.  Click on the links below to filter the grid by color or by shape.<br/><br/>
+    <h3>Color</h3>
     <a href="#" class="filter-btn" data-filter="color" data-value="all">all</a> /
     <a href="#" class="filter-btn" data-filter="color" data-value="pink">pink</a> /
     <a href="#" class="filter-btn" data-filter="color" data-value="blue">blue</a>
     <br>
-    Shape
+    <h3>Shape</h3>
     <a href="#" class="filter-btn" data-filter="shape" data-value="all">all</a> /
     <a href="#" class="filter-btn" data-filter="shape" data-value="square">square</a> /
     <a href="#" class="filter-btn" data-filter="shape" data-value="circle">circle</a>
   </div>
-  <div class = "span9 main">
-    <svg></svg>
-  </div>
-</div>
-
+  <div class = "span5 main">
 
 ```r
 require(rCharts)
@@ -55,20 +43,24 @@ require(rCharts)
 grid1 <- rCharts$new()
 grid1$field("lib", "libraries/widgets/d3grid")
 
-grid1$set(height = "500", width = "960")
+grid1$set(height = 500, width = 960, container = ".rChart", size = 400, nrow = 8, 
+    ncol = 8)
 grid1$print()
 ```
 
 
-<div id='chart2b0831541a65' class='rChart d3grid'></div>
+<div id='chart2b0845106466' class='rChart d3grid'></div>
 <script>
-
 //get parameters from rCharts
 var params = {
- "dom": "chart2b0831541a65",
-"width": "960",
-"height": "500",
-"id": "chart2b0831541a65" 
+ "dom": "chart2b0845106466",
+"width":    960,
+"height":    500,
+"container": ".rChart",
+"size":    400,
+"nrow":      8,
+"ncol":      8,
+"id": "chart2b0845106466" 
 }
 
 var width = params.width,
@@ -80,9 +72,9 @@ var filters = {
 }
 
 var grid = d3.layout.grid()
-  .rows(8)
-  .cols(8)
-  .size([400, 400]);
+  .rows( params.nrow )
+  .cols( params.ncol )
+  .size([ params.size, params.size]);
 
 var color = d3.scale.ordinal()
   .domain(["pink", "blue"])
@@ -106,13 +98,13 @@ var data = d3.range(64).map(function(d) {
   }; 
 });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(params.container).append("svg")
   .attr({
     width: width,
     height: height
   })
 .append("g")
-  .attr("transform", "translate(280,50)");
+  .attr("transform", "translate(100,50)");
 
 var filterButtons = d3.selectAll(".filter-btn")
   .on("click", function(d) {
@@ -149,7 +141,7 @@ function applyFilters(d) {
   }
   return true;
 }
-
 </script>
 
-
+  </div>
+</div>

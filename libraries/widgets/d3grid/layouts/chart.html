@@ -1,5 +1,4 @@
 <script>
-
 //get parameters from rCharts
 var params = {{{ chartParams }}}
 
@@ -12,9 +11,9 @@ var filters = {
 }
 
 var grid = d3.layout.grid()
-  .rows(8)
-  .cols(8)
-  .size([400, 400]);
+  .rows( params.nrow )
+  .cols( params.ncol )
+  .size([ params.size, params.size]);
 
 var color = d3.scale.ordinal()
   .domain(["pink", "blue"])
@@ -38,13 +37,13 @@ var data = d3.range(64).map(function(d) {
   }; 
 });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(params.container).append("svg")
   .attr({
     width: width,
     height: height
   })
 .append("g")
-  .attr("transform", "translate(280,50)");
+  .attr("transform", "translate(100,50)");
 
 var filterButtons = d3.selectAll(".filter-btn")
   .on("click", function(d) {
@@ -81,5 +80,4 @@ function applyFilters(d) {
   }
   return true;
 }
-
 </script>

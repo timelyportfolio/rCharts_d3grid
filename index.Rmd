@@ -15,39 +15,27 @@ hitheme: twitter-bootstrap
 body {
   font-family: Helvetica, sans-serif;
 }
-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
 .filter-btn.active {
   font-weight: bold;
 }
-
-
-/* my own for this project */
-.container {
-  width: 800px;
+.main {
+  float: right;
 }
 </style>
-
-  <div class = "span3 sidebar">
-    Color
+  <div class = "span2 sidebar">
+  <h3>rCharts and d3-grid</h3>
+  A very fine example by Herr Stucki duplicated by me in R.  I plan to generalize the pattern.  Click on the links below to filter the grid by color or by shape.<br/><br/>
+    <h3>Color</h3>
     <a href="#" class="filter-btn" data-filter="color" data-value="all">all</a> /
     <a href="#" class="filter-btn" data-filter="color" data-value="pink">pink</a> /
     <a href="#" class="filter-btn" data-filter="color" data-value="blue">blue</a>
     <br>
-    Shape
+    <h3>Shape</h3>
     <a href="#" class="filter-btn" data-filter="shape" data-value="all">all</a> /
     <a href="#" class="filter-btn" data-filter="shape" data-value="square">square</a> /
     <a href="#" class="filter-btn" data-filter="shape" data-value="circle">circle</a>
   </div>
-  <div class = "span9 main">
-    <svg></svg>
-  </div>
-</div>
-
+  <div class = "span5 main">
 ```{r results="asis", error = F, message = F, warning = F}
   require(rCharts)
 
@@ -58,9 +46,14 @@ svg {
   )
 
   grid1$set(
-    height = "500",
-    width = "960"
+    height = 500,
+    width = 960,
+    container = ".rChart",
+    size = 400,
+    nrow = 8,
+    ncol = 8
   )
   grid1$print()
 ```
-
+  </div>
+</div>
