@@ -18,19 +18,17 @@ body {
 .filter-btn.active {
   font-weight: bold;
 }
-.main {
-  float: right;
-}
 </style>
   <div class = "span2 sidebar">
   <h3>rCharts and d3-grid</h3>
   A very fine example by Herr Stucki duplicated by me in R.  I plan to generalize the pattern.  Click on the links below to filter the grid by color or by shape.<br/><br/>
-    <h3>Color</h3>
+    <h3>Filter</h3>
+    <h4>Color</h4>
     <a href="#" class="filter-btn" data-filter="color" data-value="all">all</a> /
     <a href="#" class="filter-btn" data-filter="color" data-value="pink">pink</a> /
     <a href="#" class="filter-btn" data-filter="color" data-value="blue">blue</a>
     <br>
-    <h3>Shape</h3>
+    <h4>Shape</h4>
     <a href="#" class="filter-btn" data-filter="shape" data-value="all">all</a> /
     <a href="#" class="filter-btn" data-filter="shape" data-value="square">square</a> /
     <a href="#" class="filter-btn" data-filter="shape" data-value="circle">circle</a>
@@ -49,18 +47,18 @@ grid1$print()
 ```
 
 
-<div id='chart2b0845106466' class='rChart d3grid'></div>
+<div id='chart319c8026496' class='rChart d3grid'></div>
 <script>
 //get parameters from rCharts
 var params = {
- "dom": "chart2b0845106466",
+ "dom": "chart319c8026496",
 "width":    960,
 "height":    500,
 "container": ".rChart",
 "size":    400,
 "nrow":      8,
 "ncol":      8,
-"id": "chart2b0845106466" 
+"id": "chart319c8026496" 
 }
 
 var width = params.width,
