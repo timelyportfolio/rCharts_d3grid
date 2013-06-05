@@ -5,7 +5,7 @@ author: Timely Portfolio
 github: {user: timelyportfolio, repo: rCharts_d3grid, branch: "gh-pages"}
 framework: bootstrap
 mode: selfcontained
-widgets: [d3-grid]
+widgets: [d3grid]
 highlighter: prettify
 hitheme: twitter-bootstrap
 ---
@@ -54,12 +54,12 @@ svg {
   grid1 <- rCharts$new()
   grid1$field(
     "lib",
-    "libraries/widgets/d3-grid"
+    "libraries/widgets/d3grid"
   )
 
   grid1$set(
-    height = "500px",
-    width = "960px"
+    height = "500",
+    width = "960"
   )
   grid1$print()
 ```

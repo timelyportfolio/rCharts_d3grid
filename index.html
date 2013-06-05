@@ -29,9 +29,9 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="libraries/frameworks/bootstrap/js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
     
-  <script src="libraries/widgets/d3-grid/js/d3.v3.js"></script>
-<script src="libraries/widgets/d3-grid/js/d3-grid.js"></script>
-<script src="libraries/widgets/d3-grid/js/d3-comparator.js"></script>
+  <script src="libraries/widgets/d3grid/js\d3.v3.js"></script>
+<script src="libraries/widgets/d3grid/js\d3-grid.js"></script>
+<script src="libraries/widgets/d3grid/js\d3-comparator.js"></script>
 
 </head>
 <body>
@@ -85,9 +85,29 @@ svg {
   </div>
 </div></p>
 
+<pre><code class="r">require(rCharts)
+
+grid1 &lt;- rCharts$new()
+grid1$field(&quot;lib&quot;, &quot;libraries/widgets/d3grid&quot;)
+
+grid1$set(height = &quot;500&quot;, width = &quot;960&quot;)
+grid1$print()
+</code></pre>
+
+<div id='chart2b0831541a65' class='rChart d3grid'></div>
+
 <script>
-var width = 960,
-    height = 500;
+
+//get parameters from rCharts
+var params = {
+ "dom": "chart2b0831541a65",
+"width": "960",
+"height": "500",
+"id": "chart2b0831541a65" 
+}
+
+var width = params.width,
+    height = params.height;
 
 var filters = {
   color: "all",
@@ -121,7 +141,7 @@ var data = d3.range(64).map(function(d) {
   }; 
 });
 
-var svg = d3.selectAll("svg")
+var svg = d3.select("body").append("svg")
   .attr({
     width: width,
     height: height

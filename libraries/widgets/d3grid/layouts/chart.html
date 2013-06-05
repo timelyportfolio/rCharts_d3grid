@@ -1,6 +1,10 @@
 <script>
-var width = {{{ width }}},
-    height = {{{ height }}};
+
+//get parameters from rCharts
+var params = {{{ chartParams }}}
+
+var width = params.width,
+    height = params.height;
 
 var filters = {
   color: "all",
@@ -34,7 +38,7 @@ var data = d3.range(64).map(function(d) {
   }; 
 });
 
-var svg = d3.selectAll("svg")
+var svg = d3.select("body").append("svg")
   .attr({
     width: width,
     height: height

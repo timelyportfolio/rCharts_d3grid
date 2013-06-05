@@ -5,7 +5,7 @@ author: Timely Portfolio
 github: {user: timelyportfolio, repo: rCharts_d3grid, branch: "gh-pages"}
 framework: bootstrap
 mode: selfcontained
-widgets: [d3-grid]
+widgets: [d3grid]
 highlighter: prettify
 hitheme: twitter-bootstrap
 ---
@@ -47,9 +47,32 @@ svg {
     <svg></svg>
   </div>
 </div>
+
+
+```r
+require(rCharts)
+
+grid1 <- rCharts$new()
+grid1$field("lib", "libraries/widgets/d3grid")
+
+grid1$set(height = "500", width = "960")
+grid1$print()
+```
+
+
+<div id='chart2b0831541a65' class='rChart d3grid'></div>
 <script>
-var width = 960,
-    height = 500;
+
+//get parameters from rCharts
+var params = {
+ "dom": "chart2b0831541a65",
+"width": "960",
+"height": "500",
+"id": "chart2b0831541a65" 
+}
+
+var width = params.width,
+    height = params.height;
 
 var filters = {
   color: "all",
@@ -83,7 +106,7 @@ var data = d3.range(64).map(function(d) {
   }; 
 });
 
-var svg = d3.selectAll("svg")
+var svg = d3.select("body").append("svg")
   .attr({
     width: width,
     height: height
@@ -128,4 +151,5 @@ function applyFilters(d) {
 }
 
 </script>
+
 
