@@ -32,7 +32,6 @@ svg {
 }
 </style>
 
-<div id = "content" class="row-fluid">
   <div class = "span3 sidebar">
     Color
     <a href="#" class="filter-btn" data-filter="color" data-value="all">all</a> /
