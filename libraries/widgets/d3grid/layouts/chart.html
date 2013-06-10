@@ -26,7 +26,7 @@ var svgGrid = svg.append("g")
   .attr("transform", "translate(100,50)");
 
 var cells = svgGrid.selectAll("g")
-  .data(grid(d3.entries(params.data.map(function(d,i) { return [d]; }))))  //thanks http://stackoverflow.com/questions/3751520/how-to-generate-sequence-of-numbers-chars-in-javascript
+  .data(grid(d3.entries(params.data.map(function(d,i) { return [d]; }))))
     .enter()
       .append("g")
         .attr("class", "cell")
