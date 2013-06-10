@@ -40,7 +40,6 @@ hitheme: twitter-bootstrap
   var color = d3.scale.linear()
     .domain([0, 32, 63])
     .range(["red", "lightgray", "green"]);
-  //thanks again http://stackoverflow.com/questions/3751520/how-to-generate-sequence-of-numbers-chars-in-javascript
   cells.selectAll("rect")
     .data(function(d) {return d.value})
       .enter().append("rect")

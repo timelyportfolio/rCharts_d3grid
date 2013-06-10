@@ -28,11 +28,11 @@ grid1$print()
 ```
 
 
-<div id='chart320c60b459bd' class='rChart d3grid'></div>
+<div id='chart320c2c9b1714' class='rChart d3grid'></div>
 <script>
 //get parameters from rCharts
 var params = {
- "dom": "chart320c60b459bd",
+ "dom": "chart320c2c9b1714",
 "width":    960,
 "height":    500,
 "container": ".rChart",
@@ -41,7 +41,7 @@ var params = {
 "ncol":      8,
 "bands": true,
 "data": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 ],
-"id": "chart320c60b459bd" 
+"id": "chart320c2c9b1714" 
 }
 
 var width = params.width,
@@ -68,7 +68,7 @@ var svgGrid = svg.append("g")
   .attr("transform", "translate(100,50)");
 
 var cells = svgGrid.selectAll("g")
-  .data(grid(d3.entries(params.data.map(function(d,i) { return [d]; }))))  //thanks http://stackoverflow.com/questions/3751520/how-to-generate-sequence-of-numbers-chars-in-javascript
+  .data(grid(d3.entries(params.data.map(function(d,i) { return [d]; }))))
     .enter()
       .append("g")
         .attr("class", "cell")
@@ -83,7 +83,6 @@ var cells = svgGrid.selectAll("g")
   var color = d3.scale.linear()
     .domain([0, 32, 63])
     .range(["red", "lightgray", "green"]);
-  //thanks again http://stackoverflow.com/questions/3751520/how-to-generate-sequence-of-numbers-chars-in-javascript
   cells.selectAll("rect")
     .data(function(d) {return d.value})
       .enter().append("rect")
