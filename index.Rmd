@@ -10,31 +10,12 @@ highlighter: prettify
 hitheme: twitter-bootstrap
 ---
 
-<style>
-/* copy and paste from original example */
-body {
-  font-family: Helvetica, sans-serif;
-}
-.filter-btn.active {
-  font-weight: bold;
-}
-</style>
   <div class = "span2 sidebar">
   <h3>rCharts and d3-grid</h3>
-  A very fine example by Herr Stucki duplicated by me in R.  I plan to generalize the pattern.  Click on the links below to filter the grid by color or by shape.<br/><br/>
-    <h3>Filter</h3>
-    <h4>Color</h4>
-    <a href="#" class="filter-btn" data-filter="color" data-value="all">all</a> /
-    <a href="#" class="filter-btn" data-filter="color" data-value="pink">pink</a> /
-    <a href="#" class="filter-btn" data-filter="color" data-value="blue">blue</a>
-    <br>
-    <h4>Shape</h4>
-    <a href="#" class="filter-btn" data-filter="shape" data-value="all">all</a> /
-    <a href="#" class="filter-btn" data-filter="shape" data-value="square">square</a> /
-    <a href="#" class="filter-btn" data-filter="shape" data-value="circle">circle</a>
+  An early experiment with [d3-grid](https://github.com/interactivethings/d3-grid) motivated by [Herr Stucki](http://bl.ocks.org/herrstucki).  I would like to make some of the d3-grid capabilities available through rCharts primarily for use in small multiples or lattice-like strips.  Since I am having trouble deciding what to provide with an rCharts implementation, I wanted to replicate each of Stucki's three examples.  But before that, I wanted to just draw a table like layout with each of the cells colored based on their location.<br/><br/>
   </div>
   <div class = "span5 main">
-```{r results="asis", error = F, message = F, warning = F}
+```{r results="asis", error = F, message = F, warning = F, cache = FALSE}
   require(rCharts)
 
   grid1 <- rCharts$new()
@@ -49,9 +30,23 @@ body {
     container = ".rChart",
     size = 400,
     nrow = 8,
-    ncol = 8
+    ncol = 8,
+    bands = TRUE,
+    data = 1:64
   )
   grid1$print()
 ```
+<script>
+  var color = d3.scale.linear()
+    .domain([0, 32, 63])
+    .range(["red", "lightgray", "green"]);
+  //thanks again http://stackoverflow.com/questions/3751520/how-to-generate-sequence-of-numbers-chars-in-javascript
+  cells.selectAll("rect")
+    .data(function(d) {return d.value})
+      .enter().append("rect")
+        .attr("width", grid.nodeSize()[0])
+        .attr("height", grid.nodeSize()[1])
+        .style("fill", function(d) {return color(d)});
+</script>
   </div>
 </div>

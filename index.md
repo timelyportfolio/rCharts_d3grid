@@ -10,28 +10,9 @@ highlighter: prettify
 hitheme: twitter-bootstrap
 ---
 
-<style>
-/* copy and paste from original example */
-body {
-  font-family: Helvetica, sans-serif;
-}
-.filter-btn.active {
-  font-weight: bold;
-}
-</style>
   <div class = "span2 sidebar">
   <h3>rCharts and d3-grid</h3>
-  A very fine example by Herr Stucki duplicated by me in R.  I plan to generalize the pattern.  Click on the links below to filter the grid by color or by shape.<br/><br/>
-    <h3>Filter</h3>
-    <h4>Color</h4>
-    <a href="#" class="filter-btn" data-filter="color" data-value="all">all</a> /
-    <a href="#" class="filter-btn" data-filter="color" data-value="pink">pink</a> /
-    <a href="#" class="filter-btn" data-filter="color" data-value="blue">blue</a>
-    <br>
-    <h4>Shape</h4>
-    <a href="#" class="filter-btn" data-filter="shape" data-value="all">all</a> /
-    <a href="#" class="filter-btn" data-filter="shape" data-value="square">square</a> /
-    <a href="#" class="filter-btn" data-filter="shape" data-value="circle">circle</a>
+  An early experiment with [d3-grid](https://github.com/interactivethings/d3-grid) motivated by [Herr Stucki](http://bl.ocks.org/herrstucki).  I would like to make some of the d3-grid capabilities available through rCharts primarily for use in small multiples or lattice-like strips.  Since I am having trouble deciding what to provide with an rCharts implementation, I wanted to replicate each of Stucki's three examples.  But before that, I wanted to just draw a table like layout with each of the cells colored based on their location.<br/><br/>
   </div>
   <div class = "span5 main">
 
@@ -42,104 +23,73 @@ grid1 <- rCharts$new()
 grid1$field("lib", "libraries/widgets/d3grid")
 
 grid1$set(height = 500, width = 960, container = ".rChart", size = 400, nrow = 8, 
-    ncol = 8)
+    ncol = 8, bands = TRUE, data = 1:64)
 grid1$print()
 ```
 
 
-<div id='chart319c8026496' class='rChart d3grid'></div>
+<div id='chart320c68e354c3' class='rChart d3grid'></div>
 <script>
 //get parameters from rCharts
 var params = {
- "dom": "chart319c8026496",
+ "dom": "chart320c68e354c3",
 "width":    960,
 "height":    500,
 "container": ".rChart",
 "size":    400,
 "nrow":      8,
 "ncol":      8,
-"id": "chart319c8026496" 
+"bands": true,
+"data": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 ],
+"id": "chart320c68e354c3" 
 }
 
 var width = params.width,
     height = params.height;
-
-var filters = {
-  color: "all",
-  shape: "all"
-}
 
 var grid = d3.layout.grid()
   .rows( params.nrow )
   .cols( params.ncol )
   .size([ params.size, params.size]);
 
-var color = d3.scale.ordinal()
-  .domain(["pink", "blue"])
-  .range(["#F66A96", "#3E6E9C"]);
-
-var size = d3.scale.linear()
-  .domain([0, 9])
-  .range([0, 2000]);
-
-var symbol = d3.svg.symbol();
-
-var sortBySize = d3.comparator()
-  .order(d3.descending, function(d) { return d.size; });
-
-var data = d3.range(64).map(function(d) { 
-  return {
-    id: d,
-    size: 1 + Math.floor(Math.random() * 9),
-    color: Math.random() > 0.5 ? "pink" : "blue",
-    shape: Math.random() > 0.5 ? "square" : "circle"
-  }; 
-});
-
+if (params.bands == true) {
+    grid.bands();
+} else {
+    grid.points();
+}
+    
 var svg = d3.select(params.container).append("svg")
   .attr({
     width: width,
     height: height
-  })
-.append("g")
-  .attr("transform", "translate(100,50)");
-
-var filterButtons = d3.selectAll(".filter-btn")
-  .on("click", function(d) {
-    d3.event.preventDefault();
-    filters[this.dataset.filter] = this.dataset.value;
-    update();
   });
 
-update();
+var svgGrid = svg.append("g")
+  .attr("transform", "translate(100,50)");
 
-function update() {
-  var node = svg.selectAll(".node")
-    .data(grid(data.filter(applyFilters).sort(sortBySize)), function(d) { return d.id; });
-  node.enter().append("path")
-    .attr("class", "node")
-    .attr("d", function(d) { return symbol.type(d.shape).size(1e-9)(); })
-    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-    .style("fill", function(d) { return color(d.color); });
-  node.transition().duration(1000).delay(function(d, i) { return i * 20; })
-    .attr("d", function(d) { return symbol.type(d.shape).size(size(d.size))(); })
-    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-  node.exit().transition()
-    .attr("d", function(d) { return symbol.type(d.shape).size(1e-9)(); })
-    .remove();
+var cells = svgGrid.selectAll("g")
+  .data(grid(d3.entries(params.data.map(function(d,i) { return [d]; }))))  //thanks http://stackoverflow.com/questions/3751520/how-to-generate-sequence-of-numbers-chars-in-javascript
+    .enter()
+      .append("g")
+        .attr("class", "cell")
+        .attr("id", function(d) { return +d.key;})
+        .attr("transform", function(d, i) {
+           return "translate(" + d.x + "," + d.y + ")"
+         });
 
-  filterButtons
-    .classed("active", function(d) { return this.dataset.value === filters[this.dataset.filter]; });
-}
-
-function applyFilters(d) {
-  for (var f in filters) {
-    if (filters[f] === "all") continue;
-    if (filters[f] !== d[f]) return false;
-  }
-  return true;
-}
 </script>
 
+<script>
+  var color = d3.scale.linear()
+    .domain([0, 32, 63])
+    .range(["red", "lightgray", "green"]);
+  //thanks again http://stackoverflow.com/questions/3751520/how-to-generate-sequence-of-numbers-chars-in-javascript
+  cells.selectAll("rect")
+    .data(function(d) {return d.value})
+      .enter().append("rect")
+        .attr("width", grid.nodeSize()[0])
+        .attr("height", grid.nodeSize()[1])
+        .style("fill", function(d) {return color(d)});
+</script>
   </div>
 </div>
